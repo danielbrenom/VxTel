@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using VxTel.Blazor.ViewModels;
 using VxTel.Domain.Interfaces;
 using VxTel.Domain.Services;
 
@@ -23,7 +24,8 @@ namespace VxTel.Blazor
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<ISimulatorService, SimulatorService>();
+            services.AddSingleton<ISimulatorService, SimulatorService>()
+                    .AddTransient<SimulatorViewModel>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

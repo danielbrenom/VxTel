@@ -1,28 +1,59 @@
-﻿@if (Icon == string.Empty)
+﻿@using VxTel.Domain.Helper
+@using System.Globalization
+@typeparam TType
+@if (Icon == string.Empty)
 {
     <div class="input-field col-@ColumnSize s@(ColumnSize)">
-        <input id="@Reference" type="text" class="validate typeahead" autocomplete="off" required>
-        <label for="@Reference" style="margin-left: 70px">@Title</label>
+        <input id="@_reference" type="text" class="validate typeahead" autocomplete="off" value="@Value" @onchange="OnValueChanged" required>
+        <label for="@_reference" style="margin-left: 70px">@Title</label>
     </div>
 }
 else
 {
     <div class="input-field col-@ColumnSize s@(ColumnSize)">
         <i class="fa @Icon fa-lg prefix"></i>
-        <input id="@Reference" type="text" class="validate typeahead" autocomplete="off" required>
-        <label for="@Reference" style="margin-left: 70px">@Title</label>
+        <input id="@_reference" type="text" class="validate typeahead" value="@Value" @onchange="OnValueChanged" autocomplete="off" required>
+        <label for="@_reference" style="margin-left: 70px">@Title</label>
     </div>
 }
 
 @code {
+
     [Parameter]
     public RenderFragment Title { get; set; }
+
     [Parameter]
     public string Icon { get; set; }
 
     [Parameter]
     public string ColumnSize { get; set; } = "3";
 
-    private string Reference = System.Guid.NewGuid().ToString("N");
+    [Parameter]
+    public TType Value { get; set; }
+
+    [Parameter]
+    public EventCallback<TType> ValueChanged { get; set; }
+
+    private string _reference = Guid.NewGuid().ToString("N");
+
+    private async Task OnValueChanged(ChangeEventArgs e)
+    {
+        var type = Nullable.GetUnderlyingType(typeof(TType)) ?? typeof(TType);
+        if (typeof(TType) != typeof(string) && e.Value.ToString().EmptyNullOrWhiteSpace())
+        {
+            Value = (TType) Activator.CreateInstance(type);
+            await ValueChanged.InvokeAsync(Value);
+            return;
+        }
+
+        Value = Type.GetTypeCode(type) switch {
+            TypeCode.String => (TType) e.Value,
+            TypeCode.Int32 =>  (TType) (object) Convert.ToInt32(e.Value),
+            TypeCode.Int64=> (TType) (object) Convert.ToInt64(e.Value),
+            TypeCode.Decimal => (TType) (object) Convert.ToDecimal(e.Value.ToString().Replace(".", "").Replace(",", "."), CultureInfo.InvariantCulture),
+            _ => default
+            };
+        await ValueChanged.InvokeAsync(Value);
+    }
 
 }

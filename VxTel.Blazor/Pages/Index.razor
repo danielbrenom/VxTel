@@ -1,6 +1,5 @@
 ﻿@page "/"
-@using System.Collections.ObjectModel
-@using VxTel.Domain.Models.Response
+@inject ViewModels.SimulatorViewModel ViewModel
 
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">
@@ -19,7 +18,7 @@
         <div class="row" id="searchForm">
             <div class="col-md-12 s12 m4">
                 <div class="icon-block">
-                    <form action="#" method="get" id="simulate">
+                    <EditForm Model="ViewModel.SimulationData" OnSubmit="ViewModel.SimulateFee">
                         <h2 class="center light-blue-text">
                             <i class="material-icons">Para onde você quer ligar?</i>
                         </h2>
@@ -33,13 +32,13 @@
                                 </select>
                                 <label>Planos disponíveis</label>
                             </div>
-                            <TextField Icon="fa-phone-volume">
+                            <TextField Icon="fa-phone-volume" TType="int" @bind-Value="@ViewModel.SimulationData.OriginDDD">
                                 <Title>Origem</Title>
                             </TextField>
-                            <TextField Icon="fa-phone-volume fa-flip-horizontal">
+                            <TextField Icon="fa-phone-volume fa-flip-horizontal" TType="int" @bind-Value="@ViewModel.SimulationData.DestinationDDD">
                                 <Title>Destino</Title>
                             </TextField>
-                            <TextField Icon="fa-hourglass-half">
+                            <TextField Icon="fa-hourglass-half" TType="int" @bind-Value="@ViewModel.SimulationData.DesiredMinutes">
                                 <Title>Minutos</Title>
                             </TextField>
                         </div>
@@ -52,12 +51,12 @@
                             </div>
                             <div class="col"></div>
                         </div>
-                    </form>
+                    </EditForm>
                 </div>
             </div>
         </div>
         <div class="row" id="resultArea">
-            <RazorTable TType="VxTel.Domain.Models.Response.SimulatorResponse" Data="@SimulatorResponses">
+            <RazorTable TType="VxTel.Domain.Models.Response.SimulatorResponse" Data="@ViewModel.SimulatorResponses">
                 <TableHeader>
                     <th>Origem</th>
                     <th>Destino</th>
@@ -81,6 +80,5 @@
 
 @code {
 
-    private ObservableCollection<Domain.Models.Response.SimulatorResponse> SimulatorResponses { get; set; } = new ObservableCollection<SimulatorResponse>();
 
 }
