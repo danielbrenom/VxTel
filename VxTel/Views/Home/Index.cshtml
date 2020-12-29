@@ -1,0 +1,84 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <br><br>
+        <h1 class="header center orange-text">FaleMais</h1>
+        <div class="row center">
+            <h5 class="header col s12 light">Simule a sua chamada e encontre o melhor plano para você</h5>
+        </div>
+        <br><br>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="section">
+        <!--   Icon Section   -->
+        <div class="row" id="searchForm">
+            <div class="col-md-12 s12 m4">
+                <div class="icon-block">
+                    <form action="#" method="get" id="simulate">
+                        <h2 class="center light-blue-text">
+                            <i class="material-icons">Para onde você quer ligar?</i>
+                        </h2>
+                        <div class="row">
+                            <div class="input-field col-3 s3">
+                                <select id="plan" required>
+                                    <option value="" disabled selected>Selecione um plano</option>
+                                    <option value="0">FaleMais 30</option>
+                                    <option value="1">FaleMais 60</option>
+                                    <option value="2">FaleMais 120</option>
+                                </select>
+                                <label>Planos disponíveis</label>
+                            </div>
+                            <div class="input-field col-3 s3">
+                                <i class="fa fa-phone-volume fa-lg prefix"></i>
+                                <input id="icon_prefix_origin" type="text" class="validate typeahead" autocomplete="off" required>
+                                <label for="icon_prefix_origin" style="margin-left: 70px">Origem</label>
+                            </div>
+                            <div class="input-field col-3 s3">
+                                <i class="fa fa-phone-volume fa-flip-horizontal fa-lg prefix" style="left: 0"></i>
+                                <input id="icon_prefix_dest" type="text" class="validate typeahead" autocomplete="off" required>
+                                <label for="icon_prefix_dest" style="margin-left: 70px">Destino</label>
+                            </div>
+                            <div class="input-field col-3 s3">
+                                <i class="fa fa-hourglass-half fa-lg prefix"></i>
+                                <input id="icon_prefix_minutes" type="text" class="validate" autocomplete="off" required>
+                                <label for="icon_prefix_minutes" style="margin-left: 70px">Minutos</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col"></div>
+                            <div class="col-6 s6">
+                                <button class="btn-large waves-effect waves-light red" type="submit" style="width: 100%" id="searchButton">
+                                    Simular preço
+                                </button>
+                            </div>
+                            <div class="col"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="resultArea">
+            <div class="col-12 row resultTable">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Tempo</th>
+                        <th>Plano FaleMais</th>
+                        <th>Com FaleMais</th>
+                        <th>Sem FaleMais</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

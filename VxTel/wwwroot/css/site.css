@@ -1,0 +1,10 @@
+﻿a:hover {
+  text-decoration: none;
+}
+
+.page-footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+}
