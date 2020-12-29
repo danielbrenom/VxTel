@@ -1,0 +1,33 @@
+﻿<div class="nav-wrapper container">
+    <a id="logo-container" asp-area="" asp-controller="Home" asp-action="Index" class="brand-logo">VxTel</a>
+    <ul class="right hide-on-med-and-down">
+        <li>
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </li>
+    </ul>
+
+    <ul id="nav-mobile" class="sidenav">
+        <li>
+            <NavLink class="nav-link" href="counter">
+                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            </NavLink>
+        </li>
+    </ul>
+    <a href="#" data-target="nav-mobile" class="sidenav-trigger">
+        <i class="material-icons">menu</i>
+    </a>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+}

@@ -1,6 +1,7 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@page "/"
+@using System.Collections.ObjectModel
+@using VxTel.Domain.Models.Response
+
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">
         <br><br>
@@ -32,21 +33,15 @@
                                 </select>
                                 <label>Planos disponíveis</label>
                             </div>
-                            <div class="input-field col-3 s3">
-                                <i class="fa fa-phone-volume fa-lg prefix"></i>
-                                <input id="icon_prefix_origin" type="text" class="validate typeahead" autocomplete="off" required>
-                                <label for="icon_prefix_origin" style="margin-left: 70px">Origem</label>
-                            </div>
-                            <div class="input-field col-3 s3">
-                                <i class="fa fa-phone-volume fa-flip-horizontal fa-lg prefix" style="left: 0"></i>
-                                <input id="icon_prefix_dest" type="text" class="validate typeahead" autocomplete="off" required>
-                                <label for="icon_prefix_dest" style="margin-left: 70px">Destino</label>
-                            </div>
-                            <div class="input-field col-3 s3">
-                                <i class="fa fa-hourglass-half fa-lg prefix"></i>
-                                <input id="icon_prefix_minutes" type="text" class="validate" autocomplete="off" required>
-                                <label for="icon_prefix_minutes" style="margin-left: 70px">Minutos</label>
-                            </div>
+                            <TextField Icon="fa-phone-volume">
+                                <Title>Origem</Title>
+                            </TextField>
+                            <TextField Icon="fa-phone-volume fa-flip-horizontal">
+                                <Title>Destino</Title>
+                            </TextField>
+                            <TextField Icon="fa-hourglass-half">
+                                <Title>Minutos</Title>
+                            </TextField>
                         </div>
                         <div class="row">
                             <div class="col"></div>
@@ -62,22 +57,30 @@
             </div>
         </div>
         <div class="row" id="resultArea">
-            <div class="col-12 row resultTable">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Origem</th>
-                        <th>Destino</th>
-                        <th>Tempo</th>
-                        <th>Plano FaleMais</th>
-                        <th>Com FaleMais</th>
-                        <th>Sem FaleMais</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                    </tbody>
-                </table>
-            </div>
+            <RazorTable TType="VxTel.Domain.Models.Response.SimulatorResponse" Data="@SimulatorResponses">
+                <TableHeader>
+                    <th>Origem</th>
+                    <th>Destino</th>
+                    <th>Tempo</th>
+                    <th>Plano FaleMais</th>
+                    <th>Com FaleMais</th>
+                    <th>Sem FaleMais</th>
+                </TableHeader>
+                <LineTemplate Context="result">
+                    <td>@result.OriginDDD</td>
+                    <td>@result.DestinationDDD</td>
+                    <td>@result.DesiredMinutes</td>
+                    <td>@result.SelectedPlan</td>
+                    <td>@result.PriceWith</td>
+                    <td>@result.PriceWithout</td>
+                </LineTemplate>
+            </RazorTable>
         </div>
     </div>
 </div>
+
+@code {
+
+    private ObservableCollection<Domain.Models.Response.SimulatorResponse> SimulatorResponses { get; set; } = new ObservableCollection<SimulatorResponse>();
+
+}

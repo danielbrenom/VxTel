@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using VxTel.Exceptions;
-using VxTel.Interfaces;
-using VxTel.Models;
-using VxTel.Models.Requests;
+using VxTel.Domain.Exceptions;
+using VxTel.Domain.Interfaces;
+using VxTel.Domain.Models;
+using VxTel.Domain.Models.Requests;
 
 namespace VxTel.Controllers
 {
